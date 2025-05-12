@@ -114,13 +114,14 @@ tuner是指附加在模型上的额外结构部分，用于减少训练参数量
     - adapter_name：待激活的tuner名字
   - 返回值：None
 - `SwiftModel.deactivate_adapter(self, adapter_name, offload)`
+  
   - 接口作用：失活一个tuner
     - 在`推理`时环境变量`USE_UNIQUE_THREAD=0`时不要调用本接口
   - 参数：
     - adapter_name：待失活的tuner名字
     - offload：失活的adapters如何处理，默认为`None`代表留在显存中，同时支持`cpu`和`meta`，代表offload到cpu和meta设备中以减轻显存消耗
   - 返回值：None
-
+  
 - `SwiftModel.get_trainable_parameters(self)`
 
   - 接口作用：返回训练参数信息

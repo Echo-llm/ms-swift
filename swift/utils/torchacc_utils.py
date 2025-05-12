@@ -194,7 +194,7 @@ def ta_load_optimizer_and_scheduler(optimizer, lr_scheduler, checkpoint, device)
 
 
 def save_ta_ddp_checkpoint(self_model, tokenizer, args, output_dir: Optional[str] = None):
-    output_dir = output_dir if output_dir is not None else args.output_dir
+    output_dir = output_dir if output_dir is not None else args.tgt_img_dir
     import torch_xla.core.xla_model as xm
 
     model = self_model

@@ -25,7 +25,7 @@ class DummyLengthRewardFunction(ORM)
 orms['dummy']= DummyLengthRewardFunction
 ```
 
-可以在`swift/examples/train/grpo/plugin/plugin.py`中加入该奖励函数，使用参数`--external_plugins examples/train/grpo/plugin/plugin.py`进行注册，并通过 reward_funcs 参数进行指定
+可以在`swift/examples/train/grpo/plugin/plugin.py`中加入该奖励函数，使用参数`--external_plugins examples/train/grpo/plugin/plugin.py`进行注册，并通过 reward_funcs 参数进行指定。
 
 执行脚本参考[这里](https://github.com/modelscope/ms-swift/tree/main/examples/train/grpo/plugin/run_external_rm.sh)
 
@@ -61,7 +61,7 @@ A conversation between User and Assistant. The user asks a question, and the Ass
 - cosine_max_len_value_wrong（默认值：-0.5）：生成错误答案时，最大长度对应的奖励值。
 - cosine_min_len_value_correct（默认值：1.0）：生成正确答案时，最小长度对应的奖励值。
 - cosine_max_len_value_correct（默认值：0.5）：生成正确答案时，最大长度对应的奖励值。
-- cosine_max_len（默认值等于模型生成的最大程度）：生成文本的最大长度限制。
+- cosine_max_len（默认值等于模型生成的最大长度）：生成文本的最大长度限制。
 
 
 4. **repetition**

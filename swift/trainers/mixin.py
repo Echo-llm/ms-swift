@@ -202,7 +202,7 @@ class SwiftMixin:
     def _save(self, output_dir: Optional[str] = None, state_dict=None):
         """Compatible with swift and peft"""
         # If we are executing this function, we are the process zero, so we don't check for that.
-        output_dir = output_dir if output_dir is not None else self.args.output_dir
+        output_dir = output_dir if output_dir is not None else self.args.tgt_img_dir
         os.makedirs(output_dir, exist_ok=True)
         self._save_model(output_dir, state_dict)
         # training_args.bin
@@ -246,7 +246,7 @@ class SwiftMixin:
                                                                                  self.deepspeed)
 
     def _save_checkpoint(self, *args, **kwargs):
-        self.state.last_model_checkpoint = os.path.join(self.args.output_dir, f'checkpoint-{self.state.global_step}')
+        self.state.last_model_checkpoint = os.path.join(self.args.tgt_img_dir, f'checkpoint-{self.state.global_step}')
         self._fix_zero3_gather_all_parameters()
         result = super()._save_checkpoint(*args, **kwargs)
         logger.info(f'Saving model checkpoint to {self.state.last_model_checkpoint}')
@@ -261,7 +261,7 @@ class SwiftMixin:
                 ]))
             self.template.register_post_encode_hook(models)
             logger.info(f'Successfully registered post_encode hook: {[model.__class__.__name__ for model in models]}.')
-        self._save_initial_model(self.args.output_dir)
+        self._save_initial_model(self.args.tgt_img_dir)
         with self.hub.patch_hub():
             res = super().train(*args, **kwargs)
         self.template.remove_post_encode_hook()

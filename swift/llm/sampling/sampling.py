@@ -17,7 +17,7 @@ class SwiftSampling(SwiftPipeline):
     def __init__(self, args: Union[List[str], SamplingArguments, None] = None) -> None:
         super().__init__(args)
         self.args.save_args()
-        os.makedirs(self.args.output_dir, exist_ok=True)
+        os.makedirs(self.args.tgt_img_dir, exist_ok=True)
         self.cur_piece = 0
         self.total_piece = 1
 
@@ -47,9 +47,9 @@ class SwiftSampling(SwiftPipeline):
         return sampling_dataset
 
     def run(self):
-        os.makedirs(self.args.output_dir, exist_ok=True)
-        iter_file = os.path.join(self.args.output_dir, self.args.output_file)
-        tmp_file = os.path.join(self.args.output_dir, self.args.output_file + '.tmp')
+        os.makedirs(self.args.tgt_img_dir, exist_ok=True)
+        iter_file = os.path.join(self.args.tgt_img_dir, self.args.output_file)
+        tmp_file = os.path.join(self.args.tgt_img_dir, self.args.output_file + '.tmp')
         if os.path.exists(iter_file) and not self.args.override_exist_file:
             return
         if os.path.exists(tmp_file):

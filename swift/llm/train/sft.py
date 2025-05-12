@@ -177,7 +177,7 @@ class SwiftSft(SwiftPipeline, TunerMixin):
         # Visualization
         if is_master() and not use_torchacc():
             if 'tensorboard' in training_args.report_to:
-                images_dir = os.path.join(training_args.output_dir, 'images')
+                images_dir = os.path.join(training_args.tgt_img_dir, 'images')
                 logger.info(f'images_dir: {images_dir}')
                 plot_images(images_dir, training_args.logging_dir, ['train/loss'], 0.9)
             if training_args.push_to_hub:
@@ -192,12 +192,12 @@ class SwiftSft(SwiftPipeline, TunerMixin):
             'memory': trainer.max_memory,
         })
         if is_master():
-            jsonl_path = os.path.join(training_args.output_dir, 'logging.jsonl')
+            jsonl_path = os.path.join(training_args.tgt_img_dir, 'logging.jsonl')
             append_to_jsonl(jsonl_path, self.train_msg)
         return self.train_msg
 
     def train(self, trainer):
-        logging_path = os.path.join(trainer.args.output_dir, 'logging.jsonl')
+        logging_path = os.path.join(trainer.args.tgt_img_dir, 'logging.jsonl')
         logger.info(f'The logging file will be saved in: {logging_path}')
         trainer.train(trainer.args.resume_from_checkpoint)
 

@@ -267,6 +267,6 @@ class TrainArguments(SwanlabArguments, TorchAccArguments, TunerArguments, Seq2Se
         if is_local_master():
             os.makedirs(self.output_dir, exist_ok=True)
 
-        self.training_args.output_dir = self.output_dir
+        self.training_args.tgt_img_dir = self.output_dir
         self.training_args.run_name = self.output_dir
         self.training_args.logging_dir = self.logging_dir

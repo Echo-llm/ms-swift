@@ -85,7 +85,7 @@ class TorchAccMixin:
         import torch_xla.core.xla_model as xm
 
         # Compatible with swift and peft
-        output_dir = output_dir if output_dir is not None else self.args.output_dir
+        output_dir = output_dir if output_dir is not None else self.args.tgt_img_dir
 
         if xm.is_master_ordinal(local=False):
             os.makedirs(output_dir, exist_ok=True)

@@ -346,7 +346,7 @@ class LLMTrain(BaseUI):
             else:
                 params += f'--{e} {cls.quote}{kwargs[e]}{cls.quote} '
         params += more_params_cmd + ' '
-        params += f'--add_version False --output_dir {sft_args.output_dir} ' \
+        params += f'--add_version False --output_dir {sft_args.tgt_img_dir} ' \
                   f'--logging_dir {sft_args.logging_dir} --ignore_args_error True'
         ddp_param = ''
         devices = other_kwargs['gpu_id']
@@ -417,4 +417,4 @@ class LLMTrain(BaseUI):
             time.sleep(1)  # to make sure the log file has been created.
             gr.Info(cls.locale('submit_alert', cls.lang)['value'])
         return run_command, sft_args.logging_dir, gr.update(open=True), Runtime.refresh_tasks(
-            sft_args.output_dir), gr.update(choices=cls.list_cache(sft_args.model))
+            sft_args.tgt_img_dir), gr.update(choices=cls.list_cache(sft_args.model))

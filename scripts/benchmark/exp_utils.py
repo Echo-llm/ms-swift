@@ -190,10 +190,10 @@ class ExpManager:
             from swift.llm import TrainArguments
             args = exp.args
             sft_args = TrainArguments(**args)
-            args['output_dir'] = sft_args.output_dir
+            args['output_dir'] = sft_args.tgt_img_dir
             args['logging_dir'] = sft_args.logging_dir
             args['add_version'] = False
-            os.makedirs(sft_args.output_dir, exist_ok=True)
+            os.makedirs(sft_args.tgt_img_dir, exist_ok=True)
             os.makedirs(sft_args.logging_dir, exist_ok=True)
             cmd = 'swift sft '
             for key, value in args.items():
@@ -202,10 +202,10 @@ class ExpManager:
             from swift.llm import RLHFArguments
             args = exp.args
             rlhf_args = RLHFArguments(**args)
-            args['output_dir'] = rlhf_args.output_dir
+            args['output_dir'] = rlhf_args.tgt_img_dir
             args['logging_dir'] = rlhf_args.logging_dir
             args['add_version'] = False
-            os.makedirs(rlhf_args.output_dir, exist_ok=True)
+            os.makedirs(rlhf_args.tgt_img_dir, exist_ok=True)
             os.makedirs(rlhf_args.logging_dir, exist_ok=True)
             cmd = 'swift rlhf '
             for key, value in args.items():

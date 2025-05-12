@@ -98,7 +98,7 @@ class PrinterCallbackNew(PrinterCallback):
     def on_log(self, args, state, control, logs=None, **kwargs):
         add_train_message(logs, state, self.start_time)
         if not is_pai_training_job() and state.is_world_process_zero:
-            jsonl_path = os.path.join(args.output_dir, 'logging.jsonl')
+            jsonl_path = os.path.join(args.tgt_img_dir, 'logging.jsonl')
             append_to_jsonl(jsonl_path, logs)
 
         _ = logs.pop('total_flos', None)

@@ -31,12 +31,12 @@ def export_to_ollama(args: ExportArguments):
     logger.info('Exporting to ollama:')
     logger.info('If you have a gguf file, try to pass the file by :--gguf_file /xxx/xxx.gguf, '
                 'else SWIFT will use the original(merged) model dir')
-    os.makedirs(args.output_dir, exist_ok=True)
+    os.makedirs(args.tgt_img_dir, exist_ok=True)
     model, template = prepare_model_template(args)
     pt_engine = PtEngine.from_model_template(model, template)
     logger.info(f'Using model_dir: {pt_engine.model_dir}')
     template_meta = template.template_meta
-    with open(os.path.join(args.output_dir, 'Modelfile'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(args.tgt_img_dir, 'Modelfile'), 'w', encoding='utf-8') as f:
         f.write(f'FROM {pt_engine.model_dir}\n')
         f.write(f'TEMPLATE """{{{{ if .System }}}}'
                 f'{replace_and_concat(template, template_meta.system_prefix, "{{SYSTEM}}", "{{ .System }}")}'
@@ -66,5 +66,5 @@ def export_to_ollama(args: ExportArguments):
     logger.info('Save Modelfile done, you can start ollama by:')
     logger.info('> ollama serve')
     logger.info('In another terminal:')
-    logger.info('> ollama create my-custom-model ' f'-f {os.path.join(args.output_dir, "Modelfile")}')
+    logger.info('> ollama create my-custom-model ' f'-f {os.path.join(args.tgt_img_dir, "Modelfile")}')
     logger.info('> ollama run my-custom-model')

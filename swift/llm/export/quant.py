@@ -26,7 +26,7 @@ class QuantEngine(ProcessorMixin):
 
         HfConfigFactory.set_model_config_attr(self.model, 'use_cache', False)
         self.processor = self.template.processor
-        if args.output_dir:
+        if args.tgt_img_dir:
             args.save_args()
 
     def quantize(self):
@@ -37,18 +37,18 @@ class QuantEngine(ProcessorMixin):
             self.template.model = self.model.model
             self.awq_model_quantize()
             self.model.save_quantized(
-                args.output_dir, safetensors=args.safe_serialization, shard_size=args.max_shard_size)
+                args.tgt_img_dir, safetensors=args.safe_serialization, shard_size=args.max_shard_size)
         elif args.quant_method == 'gptq':
             self.template.model = self.model
             gptq_quantizer = self.gptq_model_quantize()
             gptq_quantizer.save(
                 self.model,
-                args.output_dir,
+                args.tgt_img_dir,
                 safe_serialization=args.safe_serialization,
                 max_shard_size=args.max_shard_size)
         elif args.quant_method == 'bnb':
             self.model.save_pretrained(
-                args.output_dir, safe_serialization=args.safe_serialization, max_shard_size=args.max_shard_size)
+                args.tgt_img_dir, safe_serialization=args.safe_serialization, max_shard_size=args.max_shard_size)
         else:
             raise ValueError(f'args.quant_method: {args.quant_method}')
 
@@ -57,10 +57,10 @@ class QuantEngine(ProcessorMixin):
         save_checkpoint(
             None,
             self.processor,
-            args.output_dir,
+            args.tgt_img_dir,
             model_dirs=[args.model],
             additional_saved_files=self.model.model_meta.additional_saved_files)
-        logger.info(f'Successfully quantized the model and saved in {args.output_dir}.')
+        logger.info(f'Successfully quantized the model and saved in {args.tgt_img_dir}.')
 
     @torch.inference_mode()
     def _prepare_gptq_dataset(self, examples: List[Dict[str, torch.LongTensor]], batch_size: int = 1, *args, **kwargs):

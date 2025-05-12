@@ -18,13 +18,13 @@ class SwiftExport(SwiftPipeline):
     def run(self):
         args = self.args
         if args.to_peft_format:
-            args.adapters[0] = swift_to_peft_format(args.adapters[0], args.output_dir)
+            args.adapters[0] = swift_to_peft_format(args.adapters[0], args.tgt_img_dir)
         if args.merge_lora:
-            output_dir = args.output_dir
+            output_dir = args.tgt_img_dir
             if args.to_peft_format or args.quant_method or args.to_ollama or args.push_to_hub:
-                args.output_dir = None
+                args.tgt_img_dir = None
             merge_lora(args)
-            args.output_dir = output_dir  # recover
+            args.tgt_img_dir = output_dir  # recover
         if args.quant_method:
             quantize_model(args)
         elif args.to_ollama:
